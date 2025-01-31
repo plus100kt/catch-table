@@ -5,6 +5,7 @@ import com.echo.catchtable.dto.AvailableTime;
 
 public record ShopReservationResponse (
         long id,
+        long shop_id,
         String status,
         int period,
         AvailableTime[] available_times
@@ -12,6 +13,7 @@ public record ShopReservationResponse (
     public ShopReservationResponse(ReservationInformation rInfo, AvailableTime[] times) {
         this(
                 rInfo.getId(),
+                rInfo.getShop_id(),
                 rInfo.getStatus(),
                 rInfo.getPeriod(),
                 times
