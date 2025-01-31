@@ -5,14 +5,17 @@ import com.echo.catchtable.dto.AvailableTime;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import java.util.Arrays;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record ShopReservation (
-        Integer period,
-        AvailableTime[] available_times
+        int period,
+        AvailableTime[] availableTimes
 ) {
     static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -20,14 +23,14 @@ public record ShopReservation (
         // TODO: enum 으로 수정예정
         if (status.equals("이용불가")) {
             return ReservationInformation.builder()
-                    .shop_id(shop_id)
+                    .shopId(shop_id)
                     .period(0)
                     .status(status)
-                    .reservation_available_times("")
+                    .availableTimes("")
                     .build();
         }
 
-        List<String> rTimeList = Arrays.stream(available_times).map(time -> {
+        List<String> rTimeList = Arrays.stream(availableTimes).map(time -> {
             try {
                 return objectMapper.writeValueAsString(time);
             } catch (JsonProcessingException e) {
@@ -36,10 +39,10 @@ public record ShopReservation (
         }).toList();
 
         return ReservationInformation.builder()
-                .shop_id(shop_id)
+                .shopId(shop_id)
                 .period(period)
                 .status(status)
-                .reservation_available_times(rTimeList.toString())
+                .availableTimes(rTimeList.toString())
                 .build();
     }
 }

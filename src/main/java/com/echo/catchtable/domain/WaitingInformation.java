@@ -22,13 +22,13 @@ public class WaitingInformation {
     private Long id;
 
     @Column(name = "shop_id", nullable = false)
-    private Long shop_id;
+    private Long shopId;
 
     @Column(name = "waiting_max_count", nullable = false)
-    private Integer waiting_max_count;
+    private Integer waitingMaxCount;
 
     @Column(name = "expected_time_per_person", nullable = false)
-    private Integer expected_time_per_person;
+    private Integer expectedTimePerPerson;
 
     @Column(name = "status", nullable = false)
     private String status;
@@ -43,14 +43,14 @@ public class WaitingInformation {
 
     @Builder
     public WaitingInformation(
-            long shop_id,
-            int waiting_max_count,
-            int expected_time_per_person,
+            long shopId,
+            int waitingMaxCount,
+            int expectedTimePerPerson,
             String status
     ) {
-        this.shop_id = shop_id;
-        this.waiting_max_count = waiting_max_count;
-        this.expected_time_per_person = expected_time_per_person;
+        this.shopId = shopId;
+        this.waitingMaxCount = waitingMaxCount;
+        this.expectedTimePerPerson = expectedTimePerPerson;
         this.status = status;
     }
 }

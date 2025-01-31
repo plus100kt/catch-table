@@ -29,11 +29,11 @@ public class ShopService {
     @Transactional
     public ShopResponse save(ShopSaveRequest request) throws JsonProcessingException {
         Shop shop = shopRepository.save(request.toEntity());
-        OpenWeek[] openWeeks = objectMapper.readValue(shop.getOpen_week(), OpenWeek[].class);
+        OpenWeek[] openWeeks = objectMapper.readValue(shop.getOpenWeeks(), OpenWeek[].class);
         // 비동기 가능하겠는데?
-        WaitingInformation wInfo = wInfoRepository.save(request.waiting().toEntity(shop.getId(), request.waiting_status()));
-        ReservationInformation rInfo = rInfoRepository.save(request.reservation().toEntity(shop.getId(), request.reservation_status()));
-        AvailableTime[] ReservationTimes = objectMapper.readValue(rInfo.getAvailable_times(), AvailableTime[].class);
+        WaitingInformation wInfo = wInfoRepository.save(request.waiting().toEntity(shop.getId(), request.waitingStatus()));
+        ReservationInformation rInfo = rInfoRepository.save(request.reservation().toEntity(shop.getId(), request.reservationStatus()));
+        AvailableTime[] ReservationTimes = objectMapper.readValue(rInfo.getAvailableTimes(), AvailableTime[].class);
 
         ShopWaitingResponse wResponse = new ShopWaitingResponse(wInfo);
         ShopReservationResponse rResponse = new ShopReservationResponse(rInfo, ReservationTimes);

@@ -2,20 +2,23 @@ package com.echo.catchtable.dto.response;
 
 import com.echo.catchtable.domain.Shop;
 import com.echo.catchtable.dto.OpenWeek;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import java.time.LocalDateTime;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record ShopResponse (
     Long id,
-    Long seller_id,
+    Long sellerId,
     String name,
     String type,
     String description,
-    String main_image,
+    String mainImage,
     String address,
-    String address_detail,
+    String addressDetail,
     String phone,
-    OpenWeek[] open_weeks,
+    OpenWeek[] openWeeks,
 
     ShopWaitingResponse waiting,
     ShopReservationResponse reservation,
@@ -26,13 +29,13 @@ public record ShopResponse (
     public ShopResponse(Shop shop, OpenWeek[] openWeeks, ShopWaitingResponse waitingResponse, ShopReservationResponse reservationResponse) {
         this(
                 shop.getId(),
-                shop.getSeller_id(),
+                shop.getSellerId(),
                 shop.getName(),
                 shop.getType(),
                 shop.getDescription(),
-                shop.getMain_image(),
+                shop.getMainImage(),
                 shop.getAddress(),
-                shop.getAddress_detail(),
+                shop.getAddressDetail(),
                 shop.getPhone(),
                 openWeeks,
                 waitingResponse,

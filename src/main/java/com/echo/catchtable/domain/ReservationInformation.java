@@ -22,14 +22,14 @@ public class ReservationInformation {
     private Long id;
 
     @Column(name = "shop_id", nullable = false)
-    private Long shop_id;
+    private Long shopId;
 
     @Column(name = "period", nullable = false)
     private Integer period;
 
     @Lob
     @Column(name = "available_times", nullable = false)
-    private String available_times;
+    private String availableTimes;
 
     @Column(name = "status", nullable = false)
     private String status;
@@ -44,14 +44,14 @@ public class ReservationInformation {
 
     @Builder
     public ReservationInformation(
-            long shop_id,
+            long shopId,
             int period,
-            String reservation_available_times,
+            String availableTimes,
             String status
     ) {
-        this.shop_id = shop_id;
+        this.shopId = shopId;
         this.period = period;
-        this.available_times = reservation_available_times;
+        this.availableTimes = availableTimes;
         this.status = status;
     }
 }

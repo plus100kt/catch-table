@@ -22,7 +22,7 @@ public class Shop {
     private Long id;
 
     @Column(name = "seller_id", nullable = false)
-    private Long seller_id;
+    private Long sellerId;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -35,13 +35,13 @@ public class Shop {
     private String description;
 
     @Column(name = "main_image", nullable = false)
-    private String main_image;
+    private String mainImage;
 
     @Column(name = "address", nullable = false)
     private String address;
 
     @Column(name = "address_detail", nullable = false)
-    private String address_detail;
+    private String addressDetail;
 
     @Column(name = "phone", nullable = false)
     private String phone;
@@ -51,7 +51,7 @@ public class Shop {
 
     @Lob
     @Column(name = "open_weeks", nullable = false)
-    private String open_week;
+    private String openWeeks;
 
     @CreatedDate
     @Column(name = "created_at")
@@ -62,16 +62,16 @@ public class Shop {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Shop(Long seller_id, String name, String type, String description, String main_image, String address, String address_detail, String phone, String status, String open_week) {
-        this.seller_id = seller_id;
+    public Shop(Long sellerId, String name, String type, String description, String mainImage, String address, String addressDetail, String phone, String status, String openWeeks) {
+        this.sellerId = sellerId;
         this.name = name;
         this.type = type;
         this.description = description;
-        this.main_image = main_image;
+        this.mainImage = mainImage;
         this.address = address;
-        this.address_detail = address_detail;
+        this.addressDetail = addressDetail;
         this.phone = phone;
         this.status = status;
-        this.open_week = open_week;
+        this.openWeeks = openWeeks;
     }
 }
