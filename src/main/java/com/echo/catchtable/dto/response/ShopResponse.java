@@ -1,8 +1,7 @@
 package com.echo.catchtable.dto.response;
 
-import com.echo.catchtable.domain.ReservationInformation;
 import com.echo.catchtable.domain.Shop;
-import com.echo.catchtable.domain.WaitingInformation;
+import com.echo.catchtable.dto.OpenWeek;
 
 import java.time.LocalDateTime;
 
@@ -16,18 +15,15 @@ public record ShopResponse (
     String address,
     String address_detail,
     String phone,
-    String open_week,
+    OpenWeek[] open_weeks,
 
-    String waiting_status,
-    String waiting,
-
-    String reservation_status,
-    String reservation,
+    ShopWaitingResponse waiting,
+    ShopReservationResponse reservation,
 
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
-    public ShopResponse(Shop shop, WaitingInformation wInfo, ReservationInformation rInfo) {
+    public ShopResponse(Shop shop, OpenWeek[] openWeeks, ShopWaitingResponse waitingResponse, ShopReservationResponse reservationResponse) {
         this(
                 shop.getId(),
                 shop.getSeller_id(),
@@ -38,14 +34,9 @@ public record ShopResponse (
                 shop.getAddress(),
                 shop.getAddress_detail(),
                 shop.getPhone(),
-                shop.getOpen_week(),
-                // 수정예정
-                wInfo.getStatus(),
-                wInfo.toString(),
-                // 수정예정
-                rInfo.getStatus(),
-                rInfo.toString(),
-
+                openWeeks,
+                waitingResponse,
+                reservationResponse,
                 shop.getCreatedAt(),
                 shop.getUpdatedAt()
         );
