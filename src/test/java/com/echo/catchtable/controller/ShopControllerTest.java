@@ -56,7 +56,7 @@ class ShopControllerTest {
     @DisplayName("ShopSave: 상점 등록 테스트")
     @Test
     public void ShopSave() throws Exception {
-        String filePath = "src/test/resources/json/shop/register.json"; // resources 폴더 내의 파일 경로
+        String filePath = "src/test/resources/json/shop/registerRequest.json"; // resources 폴더 내의 파일 경로
         final String url = "/shops";
         final String request = new String(Files.readAllBytes(Paths.get(filePath)));
 
