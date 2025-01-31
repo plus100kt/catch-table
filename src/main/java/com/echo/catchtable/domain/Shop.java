@@ -30,6 +30,7 @@ public class Shop {
     @Column(name = "type", nullable = false)
     private String type;
 
+    @Lob
     @Column(name = "description", nullable = false)
     private String description;
 
@@ -39,7 +40,7 @@ public class Shop {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address_detail", nullable = false)
     private String address_detail;
 
     @Column(name = "phone", nullable = false)
@@ -48,7 +49,8 @@ public class Shop {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @Column(name = "open_week", nullable = false)
+    @Lob
+    @Column(name = "open_weeks", nullable = false)
     private String open_week;
 
     @CreatedDate

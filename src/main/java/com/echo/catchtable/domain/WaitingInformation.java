@@ -1,6 +1,5 @@
 package com.echo.catchtable.domain;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

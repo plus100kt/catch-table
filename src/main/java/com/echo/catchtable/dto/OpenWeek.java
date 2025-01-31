@@ -1,4 +1,4 @@
-package com.echo.catchtable.dto.request;
+package com.echo.catchtable.dto;
 
 public record OpenWeek (
         String week,

@@ -27,8 +27,9 @@ public class ReservationInformation {
     @Column(name = "period", nullable = false)
     private Integer period;
 
-    @Column(name = "reservation_available_times", nullable = false)
-    private String reservation_available_times;
+    @Lob
+    @Column(name = "available_times", nullable = false)
+    private String available_times;
 
     @Column(name = "status", nullable = false)
     private String status;
@@ -50,7 +51,7 @@ public class ReservationInformation {
     ) {
         this.shop_id = shop_id;
         this.period = period;
-        this.reservation_available_times = reservation_available_times;
+        this.available_times = reservation_available_times;
         this.status = status;
     }
 }
