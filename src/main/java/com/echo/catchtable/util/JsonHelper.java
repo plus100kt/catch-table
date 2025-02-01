@@ -6,6 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
 
 public class JsonHelper extends ObjectMapper {
+    private static final JsonHelper instance = new JsonHelper();
+    public static  JsonHelper getInstance() {
+        return instance;
+    }
     ObjectMapper objectMapper = new ObjectMapper();
 
     public String jsonArrayToString(Object[] jsonList) {
