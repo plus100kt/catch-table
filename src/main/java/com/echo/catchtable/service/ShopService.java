@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class ShopService {
@@ -58,5 +60,14 @@ public class ShopService {
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
         shop.update(request, openWeeksStr);
         return shop;
+    }
+
+    public Shop findById(long id) {
+        return shopRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+    }
+
+    public List<Shop> findAll() {
+        return shopRepository.findAll();
     }
 }
