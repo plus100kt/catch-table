@@ -90,4 +90,11 @@ public class ShopController {
         return ResponseEntity.ok()
                 .body(shopResponseList);
     }
+
+    @DeleteMapping("/shops/{id}")
+    public ResponseEntity<Void> deleteShop(@PathVariable(name = "id") long id) {
+        shopService.delete(id);
+        return ResponseEntity.ok()
+                .build();
+    }
 }

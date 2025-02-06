@@ -70,4 +70,18 @@ public class ShopService {
     public List<Shop> findAll() {
         return shopRepository.findAll();
     }
+
+    @Transactional
+    public void delete(long id) {
+        Shop shop = shopRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+        WaitingInformation wInfo = wInfoRepository.findByShopId(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+        ReservationInformation rInfo = rInfoRepository.findByShopId(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+
+        shopRepository.delete(shop);
+        wInfoRepository.delete(wInfo);
+        rInfoRepository.delete(rInfo);
+    }
 }
