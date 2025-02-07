@@ -8,26 +8,22 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.time.LocalDateTime;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record ShopResponse (
-    Long id,
-    Long sellerId,
-    String name,
-    String status,
-    String type,
-    String description,
-    String mainImage,
-    String address,
-    String addressDetail,
-    String phone,
-    OpenWeek[] openWeeks,
-
-    ShopWaitingResponse waiting,
-    ShopReservationResponse reservation,
-
-    LocalDateTime createdAt,
-    LocalDateTime updatedAt
-) {
-    public ShopResponse(Shop shop, OpenWeek[] openWeeks, ShopWaitingResponse waitingResponse, ShopReservationResponse reservationResponse) {
+public record ShopResponse(
+        Long id,
+        Long sellerId,
+        String name,
+        String status,
+        String type,
+        String description,
+        String mainImage,
+        String address,
+        String addressDetail,
+        String phone,
+        OpenWeek[] openWeeks,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
+){
+    public ShopResponse(Shop shop, OpenWeek[] openWeeks) {
         this(
                 shop.getId(),
                 shop.getSellerId(),
@@ -40,8 +36,6 @@ public record ShopResponse (
                 shop.getAddressDetail(),
                 shop.getPhone(),
                 openWeeks,
-                waitingResponse,
-                reservationResponse,
                 shop.getCreatedAt(),
                 shop.getUpdatedAt()
         );

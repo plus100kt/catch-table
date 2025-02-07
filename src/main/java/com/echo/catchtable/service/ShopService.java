@@ -6,17 +6,20 @@ import com.echo.catchtable.domain.WaitingInformation;
 import com.echo.catchtable.dto.AvailableTime;
 import com.echo.catchtable.dto.OpenWeek;
 import com.echo.catchtable.dto.request.ShopSaveRequest;
+import com.echo.catchtable.dto.request.ShopUpdateRequest;
 import com.echo.catchtable.dto.response.ShopReservationResponse;
+import com.echo.catchtable.dto.response.ShopDetailResponse;
 import com.echo.catchtable.dto.response.ShopResponse;
 import com.echo.catchtable.dto.response.ShopWaitingResponse;
 import com.echo.catchtable.repository.ReservationInformationRepository;
 import com.echo.catchtable.repository.ShopRepository;
 import com.echo.catchtable.repository.WaitingInformationRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.echo.catchtable.util.JsonHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -24,21 +27,61 @@ public class ShopService {
     private final ShopRepository shopRepository;
     private final WaitingInformationRepository wInfoRepository;
     private final ReservationInformationRepository rInfoRepository;
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Transactional
-    public ShopResponse save(ShopSaveRequest request) throws JsonProcessingException {
-        Shop shop = shopRepository.save(request.toEntity());
-        OpenWeek[] openWeeks = objectMapper.readValue(shop.getOpenWeeks(), OpenWeek[].class);
-        // 비동기 가능하겠는데?
+    public ShopDetailResponse save(ShopSaveRequest request) throws Exception {
+        JsonHelper jsonHelper = JsonHelper.getInstance();
+        String openWeeksStr = jsonHelper.jsonArrayToString(request.openWeeks());
+        String availableTimesStr = request.reservationStatus().equals("영업중지")
+                ? ""
+                :jsonHelper.jsonArrayToString(request.reservation().availableTimes());
+
+        // @Transactional save 작업
+        Shop shop = shopRepository.save(request.toEntity(openWeeksStr));
         WaitingInformation wInfo = wInfoRepository.save(request.waiting().toEntity(shop.getId(), request.waitingStatus()));
-        ReservationInformation rInfo = rInfoRepository.save(request.reservation().toEntity(shop.getId(), request.reservationStatus()));
-        AvailableTime[] ReservationTimes = objectMapper.readValue(rInfo.getAvailableTimes(), AvailableTime[].class);
+        ReservationInformation rInfo = rInfoRepository.save(request.reservation().toEntity(shop.getId(), request.reservationStatus(), availableTimesStr));
 
+        OpenWeek[] openWeeks = jsonHelper.readValue(shop.getOpenWeeks(), OpenWeek[].class);
+        AvailableTime[] availableTimes = jsonHelper.readValue(rInfo.getAvailableTimes(), AvailableTime[].class);
+
+        ShopResponse sResponse = new ShopResponse(shop, openWeeks);
         ShopWaitingResponse wResponse = new ShopWaitingResponse(wInfo);
-        ShopReservationResponse rResponse = new ShopReservationResponse(rInfo, ReservationTimes);
+        ShopReservationResponse rResponse = new ShopReservationResponse(rInfo, availableTimes);
 
-        ShopResponse response = new ShopResponse(shop, openWeeks, wResponse, rResponse);
+        ShopDetailResponse response = new ShopDetailResponse(sResponse, openWeeks, wResponse, rResponse);
         return response;
+    }
+
+    @Transactional
+    public Shop update(long id, ShopUpdateRequest request) {
+        JsonHelper jsonHelper = JsonHelper.getInstance();
+        String openWeeksStr = jsonHelper.jsonArrayToString(request.openWeeks());
+        Shop shop = shopRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+        shop.update(request, openWeeksStr);
+        return shop;
+    }
+
+    public Shop findById(long id) {
+        return shopRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+    }
+
+    public List<Shop> findAll() {
+        return shopRepository.findAll();
+    }
+
+    @Transactional
+    public void delete(long id) {
+        Shop shop = shopRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+        WaitingInformation wInfo = wInfoRepository.findByShopId(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+        ReservationInformation rInfo = rInfoRepository.findByShopId(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+
+        shopRepository.delete(shop);
+        wInfoRepository.delete(wInfo);
+        rInfoRepository.delete(rInfo);
     }
 }

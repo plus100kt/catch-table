@@ -1,5 +1,8 @@
 package com.echo.catchtable.domain;
 
+import com.echo.catchtable.dto.OpenWeek;
+import com.echo.catchtable.dto.request.ShopUpdateRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -10,6 +13,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -66,12 +71,27 @@ public class Shop {
         this.sellerId = sellerId;
         this.name = name;
         this.type = type;
+        this.status = status;
         this.description = description;
         this.mainImage = mainImage;
         this.address = address;
         this.addressDetail = addressDetail;
         this.phone = phone;
         this.status = status;
+        this.openWeeks = openWeeks;
+    }
+
+    public void update(ShopUpdateRequest request, String openWeeks) {
+        this.sellerId = request.sellerId();
+        this.name = request.name();
+        this.type = request.type();
+        this.status = request.status();
+        this.description = request.description();
+        this.mainImage = request.mainImage();
+        this.address = request.address();
+        this.addressDetail = request.addressDetail();
+        this.phone = request.phone();
+        this.status = request.status();
         this.openWeeks = openWeeks;
     }
 }
