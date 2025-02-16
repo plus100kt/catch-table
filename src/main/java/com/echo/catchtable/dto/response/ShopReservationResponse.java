@@ -2,24 +2,24 @@ package com.echo.catchtable.dto.response;
 
 import com.echo.catchtable.domain.ReservationInformation;
 import com.echo.catchtable.dto.AvailableTime;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.echo.catchtable.enums.ReservationStatus;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+import java.util.List;
+
 public record ShopReservationResponse (
-        long id,
-        long shopId,
-        String status,
-        int period,
-        AvailableTime[] availableTimes
+        Long id,
+        Long shopId,
+        ReservationStatus status,
+        Integer period,
+        List<AvailableTime> availableTimes
 ) {
-    public ShopReservationResponse(ReservationInformation rInfo, AvailableTime[] times) {
+    public ShopReservationResponse(ReservationInformation rInfo) {
         this(
                 rInfo.getId(),
                 rInfo.getShopId(),
                 rInfo.getStatus(),
                 rInfo.getPeriod(),
-                times
+                rInfo.getAvailableTimes()
         );
     }
 }

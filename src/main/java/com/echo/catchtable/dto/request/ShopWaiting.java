@@ -1,31 +1,23 @@
 package com.echo.catchtable.dto.request;
 
 import com.echo.catchtable.domain.WaitingInformation;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.echo.catchtable.enums.WaitingStatus;
+import jakarta.validation.constraints.NotNull;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record ShopWaiting (
-        int waitingMaxCount,
-        int expectedTimePerPerson
+        @NotNull(message = "상태는 Null 일 수 없습니다")
+        WaitingStatus status,
+        @NotNull(message = "최대인원는 Null 일 수 없습니다")
+        Integer waitingMaxCount,
+        @NotNull(message = "기다리는 시간은 Null 일 수 없습니다")
+        Integer expectedTimePerPerson
 ){
-    public WaitingInformation toEntity(long shop_id, String waiting_status) {
-        // TODO: enum 으로 수정예정
-        if (waiting_status.equals("이용불가")) {
-            return WaitingInformation.builder()
-                    .shopId(shop_id)
-                    .waitingMaxCount(0)
-                    .expectedTimePerPerson(0)
-                    .status(waiting_status)
-                    .build();
-        }
+    public WaitingInformation toEntity(long shopId) {
         return WaitingInformation.builder()
-                .shopId(shop_id)
-                .waitingMaxCount(waitingMaxCount())
-                .expectedTimePerPerson(expectedTimePerPerson())
-                .status(waiting_status)
+                .shopId(shopId)
+                .waitingMaxCount(waitingMaxCount)
+                .expectedTimePerPerson(expectedTimePerPerson)
+                .status(status)
                 .build();
     }
 }

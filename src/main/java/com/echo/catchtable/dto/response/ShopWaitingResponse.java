@@ -1,16 +1,14 @@
 package com.echo.catchtable.dto.response;
 
 import com.echo.catchtable.domain.WaitingInformation;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.echo.catchtable.enums.WaitingStatus;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record ShopWaitingResponse (
-        long id,
-        long shop_id,
-        String status,
-        int waitingMaxCount,
-        int expected_time_per_person
+        Long id,
+        Long shop_id,
+        WaitingStatus status,
+        Integer waitingMaxCount,
+        Integer expectedTimePerPerson
 ) {
     public ShopWaitingResponse(WaitingInformation wInfo) {
         this(

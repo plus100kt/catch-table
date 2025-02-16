@@ -1,26 +1,23 @@
 package com.echo.catchtable.domain;
 
+import com.echo.catchtable.dto.OpenWeek;
+import com.echo.catchtable.enums.ShopStatus;
+import com.echo.catchtable.enums.ShopType;
+import com.echo.catchtable.utils.OpenWeeksConverter;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Shop {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
-    private Long id;
-
+public class Shop extends BaseEntity {
     @Column(name = "seller_id", nullable = false)
     private Long sellerId;
 
@@ -28,7 +25,8 @@ public class Shop {
     private String name;
 
     @Column(name = "type", nullable = false)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private ShopType type;
 
     @Lob
     @Column(name = "description", nullable = false)
@@ -47,22 +45,16 @@ public class Shop {
     private String phone;
 
     @Column(name = "status", nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ShopStatus status;
 
     @Lob
     @Column(name = "open_weeks", nullable = false)
-    private String openWeeks;
-
-    @CreatedDate
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Convert(converter = OpenWeeksConverter.class)
+    private List<OpenWeek> openWeeks;
 
     @Builder
-    public Shop(Long sellerId, String name, String type, String description, String mainImage, String address, String addressDetail, String phone, String status, String openWeeks) {
+    public Shop(Long sellerId, String name, ShopType type, String description, String mainImage, String address, String addressDetail, String phone, ShopStatus status, List<OpenWeek> openWeeks) {
         this.sellerId = sellerId;
         this.name = name;
         this.type = type;

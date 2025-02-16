@@ -1,26 +1,22 @@
 package com.echo.catchtable.domain;
 
+import com.echo.catchtable.dto.AvailableTime;
+import com.echo.catchtable.enums.ReservationStatus;
+import com.echo.catchtable.utils.AvailableTimesConverter;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ReservationInformation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
-    private Long id;
-
+public class ReservationInformation extends BaseEntity {
     @Column(name = "shop_id", nullable = false)
     private Long shopId;
 
@@ -29,25 +25,19 @@ public class ReservationInformation {
 
     @Lob
     @Column(name = "available_times", nullable = false)
-    private String availableTimes;
+    @Convert(converter = AvailableTimesConverter.class)
+    private List<AvailableTime> availableTimes;
 
     @Column(name = "status", nullable = false)
-    private String status;
-
-    @CreatedDate
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus status;
 
     @Builder
     public ReservationInformation(
             long shopId,
             int period,
-            String availableTimes,
-            String status
+            List<AvailableTime> availableTimes,
+            ReservationStatus status
     ) {
         this.shopId = shopId;
         this.period = period;
