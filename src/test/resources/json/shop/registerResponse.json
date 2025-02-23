@@ -1,0 +1,54 @@
+{
+  "id": 2,
+  "seller_id": 111,
+  "name": "제로베이스 2호점",
+  "type": "일식",
+  "description": "제로베이스 2호점 입니다",
+  "main_image": "http://zerobase.co.kr",
+  "address": "용인시 만현로",
+  "address_detail": "107 101동 701호",
+  "phone": "010-2345-5678",
+  "open_weeks": [
+    {
+      "week": "monday",
+      "start_time": "09:00",
+      "end_time": "21:00",
+      "last_order": "20:00",
+      "break_start_time": "15:00",
+      "break_end_time": "17:00"
+    },
+    {
+      "week": "sunday",
+      "start_time": "09:00",
+      "end_time": "21:00",
+      "last_order": "20:00",
+      "break_start_time": "15:00",
+      "break_end_time": "17:00"
+    }
+  ],
+  "waiting": {
+    "id": 2,
+    "shop_id": 2,
+    "status": "이용가능",
+    "waiting_max_count": 10,
+    "expected_time_per_person": 10
+  },
+  "reservation": {
+    "id": 2,
+    "shop_id": 2,
+    "status": "예약가능",
+    "period": 90,
+    "available_times": [
+      {
+        "start_time": "09:00",
+        "end_time": "10:30"
+      },
+      {
+        "start_time": "10:30",
+        "end_time": "12:00"
+      }
+    ]
+  },
+  "created_at": "2025-01-31T17:52:06.31486",
+  "updated_at": "2025-01-31T17:52:06.31486"
+}
