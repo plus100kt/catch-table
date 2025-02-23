@@ -22,10 +22,7 @@ public record ShopDetailResponse(
     List<OpenWeek> openWeeks,
 
     ShopWaitingResponse waiting,
-    ShopReservationResponse reservation,
-
-    LocalDateTime createdAt,
-    LocalDateTime updatedAt
+    ShopReservationResponse reservation
 ) {
     public ShopDetailResponse(ShopDetail detail) {
         this(
@@ -41,9 +38,7 @@ public record ShopDetailResponse(
                 detail.shop().getPhone(),
                 detail.shop().getOpenWeeks(),
                 new ShopWaitingResponse(detail.waitingInformation()),
-                new ShopReservationResponse(detail.reservationInformation()),
-                detail.shop().getCreatedAt(),
-                detail.shop().getUpdatedAt()
+                new ShopReservationResponse(detail.reservationInformation())
         );
     }
 }
