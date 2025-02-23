@@ -14,8 +14,8 @@ public class AvailableTimesConverter implements AttributeConverter<List<Availabl
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public String convertToDatabaseColumn(List<AvailableTime> openWeeks) {
-        return openWeeks.stream().map(value -> {
+    public String convertToDatabaseColumn(List<AvailableTime> availableTimes) {
+        return availableTimes.stream().map(value -> {
             try {
                 return objectMapper.writeValueAsString(value);
             } catch (JsonProcessingException e) {
