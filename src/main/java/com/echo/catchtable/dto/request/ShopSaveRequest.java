@@ -2,6 +2,7 @@ package com.echo.catchtable.dto.request;
 
 import com.echo.catchtable.domain.Shop;
 import com.echo.catchtable.dto.OpenWeek;
+import com.echo.catchtable.dto.service.ShopSaveService;
 import com.echo.catchtable.enums.ShopStatus;
 import com.echo.catchtable.enums.ShopType;
 import jakarta.validation.constraints.NotBlank;
@@ -39,6 +40,21 @@ public record ShopSaveRequest(
         @NotNull(message = "예약정보는 null일 수 없습니다")
         ShopReservation reservation
 ) {
+        public ShopSaveService toService() {
+                return new ShopSaveService(
+                        sellerId,
+                        name,
+                        type,
+                        description,
+                        mainImage,
+                        address,
+                        addressDetail,
+                        phone,
+                        openWeeks,
+                        waiting,
+                        reservation
+                );
+        }
 
     public Shop toEntity() {
         return Shop.builder()

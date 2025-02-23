@@ -4,7 +4,8 @@ import com.echo.catchtable.domain.ReservationInformation;
 import com.echo.catchtable.domain.Shop;
 import com.echo.catchtable.domain.WaitingInformation;
 import com.echo.catchtable.dto.request.ShopSaveRequest;
-import com.echo.catchtable.dto.service.ShopDetail;
+import com.echo.catchtable.dto.service.ShopDetailService;
+import com.echo.catchtable.dto.service.ShopSaveService;
 import com.echo.catchtable.repository.ShopRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,11 @@ public class ShopService {
     private final ReservationInformationService rInfoService;
 
     @Transactional
-    public ShopDetail save(ShopSaveRequest request) {
-        Shop shop = shopRepository.save(request.toEntity());
-        WaitingInformation wInfo = wInfoService.save(request.waiting().toEntity(shop.getId()));
-        ReservationInformation rInfo = rInfoService.save(request.reservation().toEntity(shop.getId()));
+    public ShopDetailService save(ShopSaveService param) {
+        Shop shop = shopRepository.save(param.toEntity());
+        WaitingInformation wInfo = wInfoService.save(param.waiting().toEntity(shop.getId()));
+        ReservationInformation rInfo = rInfoService.save(param.reservation().toEntity(shop.getId()));
 
-        return new ShopDetail(shop, wInfo, rInfo);
+        return new ShopDetailService(shop, wInfo, rInfo);
     }
 }

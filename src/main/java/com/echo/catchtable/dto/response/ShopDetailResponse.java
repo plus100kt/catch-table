@@ -1,11 +1,10 @@
 package com.echo.catchtable.dto.response;
 
 import com.echo.catchtable.dto.OpenWeek;
-import com.echo.catchtable.dto.service.ShopDetail;
+import com.echo.catchtable.dto.service.ShopDetailService;
 import com.echo.catchtable.enums.ShopStatus;
 import com.echo.catchtable.enums.ShopType;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public record ShopDetailResponse(
@@ -24,7 +23,7 @@ public record ShopDetailResponse(
     ShopWaitingResponse waiting,
     ShopReservationResponse reservation
 ) {
-    public ShopDetailResponse(ShopDetail detail) {
+    public ShopDetailResponse(ShopDetailService detail) {
         this(
                 detail.shop().getId(),
                 detail.shop().getSellerId(),
