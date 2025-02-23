@@ -6,11 +6,10 @@ import com.echo.catchtable.dto.request.ShopReservation;
 import com.echo.catchtable.dto.request.ShopWaiting;
 import com.echo.catchtable.enums.ShopStatus;
 import com.echo.catchtable.enums.ShopType;
-import lombok.Builder;
 
 import java.util.List;
 
-public record ShopSaveService (
+public record ShopSaveServiceDto(
         Long sellerId,
         String name,
         ShopType type,

@@ -5,7 +5,7 @@ import com.echo.catchtable.domain.Shop;
 import com.echo.catchtable.domain.WaitingInformation;
 
 
-public record ShopDetailService(
+public record ShopDetailServiceDto(
     Shop shop,
     WaitingInformation waitingInformation,
     ReservationInformation reservationInformation

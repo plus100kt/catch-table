@@ -2,7 +2,7 @@ package com.echo.catchtable.controller;
 
 import com.echo.catchtable.dto.request.ShopSaveRequest;
 import com.echo.catchtable.dto.response.ShopDetailResponse;
-import com.echo.catchtable.dto.service.ShopDetailService;
+import com.echo.catchtable.dto.service.ShopDetailServiceDto;
 import com.echo.catchtable.service.ShopService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ public class ShopController {
 
     @PostMapping("/shops")
     public ResponseEntity<ShopDetailResponse> saveShop(@RequestBody @Valid ShopSaveRequest request) {
-        ShopDetailService shopDetailService = shopService.save(request.toService());
-        ShopDetailResponse response =  new ShopDetailResponse(shopDetailService);
+        ShopDetailServiceDto shopDetailServiceDto = shopService.save(request.toService());
+        ShopDetailResponse response =  new ShopDetailResponse(shopDetailServiceDto);
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(response);

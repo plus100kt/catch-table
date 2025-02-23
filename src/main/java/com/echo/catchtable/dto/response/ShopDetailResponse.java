@@ -1,7 +1,7 @@
 package com.echo.catchtable.dto.response;
 
 import com.echo.catchtable.dto.OpenWeek;
-import com.echo.catchtable.dto.service.ShopDetailService;
+import com.echo.catchtable.dto.service.ShopDetailServiceDto;
 import com.echo.catchtable.enums.ShopStatus;
 import com.echo.catchtable.enums.ShopType;
 
@@ -23,7 +23,7 @@ public record ShopDetailResponse(
     ShopWaitingResponse waiting,
     ShopReservationResponse reservation
 ) {
-    public ShopDetailResponse(ShopDetailService detail) {
+    public ShopDetailResponse(ShopDetailServiceDto detail) {
         this(
                 detail.shop().getId(),
                 detail.shop().getSellerId(),
