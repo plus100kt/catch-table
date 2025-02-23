@@ -45,7 +45,7 @@ public record ShopSaveRequest(
                 .sellerId(sellerId)
                 .name(name).type(type)
                 .description(description)
-                .status(ShopStatus.이용가능)
+                .status(ShopStatus.AVAILABLE)
                 .mainImage(mainImage)
                 .address(address)
                 .addressDetail(addressDetail)
